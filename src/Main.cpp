@@ -65,8 +65,8 @@ void Setup()
 	score = 0;
 	dir = STOP;
 	srand(time(NULL));
-	fruitX = (rand() % (height - 1)) + 1;
-	fruitY = (rand() % (width - 1)) + 1;
+	fruitX = (rand() % (height - 2)) + 1;
+	fruitY = (rand() % (width - 2)) + 1;
 	head = 'O';
 	array<int,2> t = {snakeX, snakeY};
 	snake.emplace(snake.begin(),t);
@@ -119,7 +119,7 @@ void Draw()
 		}
 		cout << endl;
 	}
-	cout << "X=" << snakeX << " Y=" << snakeY << " fruitX=" << fruitX << " fruitY=" << fruitY << endl;
+	cout << "Score = " << score << endl;
 	
 }
 
@@ -180,8 +180,12 @@ void Logic()
 	{
 		array<int,2> t = {snakeX, snakeY};
 		snake.insert(snake.begin(),t);
-		fruitX = (rand() % (height - 1)) + 1;
-		fruitY = (rand() % (width - 1)) + 1;
+		do
+		{
+			fruitX = (rand() % (height - 2)) + 1;
+			fruitY = (rand() % (width - 2)) + 1;
+		} while (btail(fruitX,fruitY));
+		score+=100;
 	} else {
 		array<int,2> t = {snakeX, snakeY};
 		snake.insert(snake.begin(),t);
@@ -205,6 +209,6 @@ int main()
 		Logic();
 		Sleep(INTERVAL);
 	}
-	
+	cout << "You died!\n";
 	return 0;
 }
